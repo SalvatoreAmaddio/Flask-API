@@ -1,9 +1,7 @@
-from flask import Blueprint, request
-import sqlalchemy.exc as SQLError
+from flask import Blueprint
 from ..models.address import Address
 from ..schemas.address_schema import AddressSchema
 from .abstractRoute import AbstractRoute
-from ..database import db
 from flask_jwt_extended import jwt_required
 
 class AddressApi(AbstractRoute):

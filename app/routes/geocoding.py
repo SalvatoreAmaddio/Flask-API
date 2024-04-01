@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint
 import sqlalchemy.exc as SQLError
 from ..models.address import Address
 from ..database import db
