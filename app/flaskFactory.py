@@ -9,7 +9,7 @@ from .models.envs import *
 
 is_connected = False
 
-db.create_schema(DB_PATH,DB_NAME)
+db.create_schema(DB_DEFAULT_PATH, DB_NAME)
 app = Flask(__name__)
 
 app.register_blueprint(student_blueprint)

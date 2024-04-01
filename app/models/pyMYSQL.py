@@ -60,7 +60,7 @@ class pyMySQL(SQLAlchemy):
         """
         app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://{connection_string}"
 
-    def create_schema(self, dbPath, dbName):
+    def create_schema(self, dbDefaultPath, dbName):
         """
         It creates a new Schema if it does not exist.
 
@@ -68,17 +68,17 @@ class pyMySQL(SQLAlchemy):
         call this method before app.config
 
         Args:
-            dbPath: the path to the database.
-            dbName: the name of the database.
+            dbDefaultPath: a connection string to connect to the database engine by using its default database.
+            dbName: the name of the database to create.
 
         For Example:
-            db.create_schema("root:root@localhost/","flaskAssessment")
+            db.create_schema("root:root@localhost/mysql","flaskAssessment")
         """
-            engine = create_engine(f'mysql+pymysql://{dbPath}')
-            conn = engine.connect()
-            sql_cmd = text(f"CREATE DATABASE IF NOT EXISTS {dbName}")
-            conn.execute(sql_cmd)
-            conn.close()
+        engine = create_engine(f'mysql+pymysql://{dbDefaultPath}')
+        conn = engine.connect()
+        sql_cmd = text(f"CREATE DATABASE IF NOT EXISTS {dbName}")
+        conn.execute(sql_cmd)
+        conn.close()
 
     def create_tables(self):
         """
