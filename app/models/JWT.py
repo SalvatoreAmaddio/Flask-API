@@ -1,5 +1,4 @@
 from datetime import timedelta
-import json
 from flask import Flask
 from flask_jwt_extended import JWTManager
 

@@ -2,7 +2,6 @@ from flask import request, jsonify, Blueprint
 from flask_jwt_extended import get_jwt_identity, set_access_cookies, get_jwt, unset_jwt_cookies
 from datetime import datetime, timedelta
 from ..models.user import User
-from ..database import db
 from .response import response
 
 user_blueprint = Blueprint("user",__name__)
