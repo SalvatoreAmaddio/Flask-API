@@ -10,6 +10,17 @@ from .models.envs import *
 from .models.user import User
 from .models.student import Student
 
+def upload_data():
+    if db.record_count(Student) <= 0:
+        with open('data/raw/studentdataset.csv', newline='') as csvfile:
+            csvreader = csv.reader(csvfile, delimiter=',', quotechar='"')
+            next(csvreader, None)  # Skip the header row
+            for row in csvreader:
+                student = Student()
+                student.read_CSV_Row(row)
+                db.add_new_record(student)
+            db.commit()
+    
 is_connected = False
 
 db.create_schema(DB_DEFAULT_PATH, DB_NAME)
@@ -34,7 +45,7 @@ jwt.set_app(app)
 with app.app_context():
         db.create_tables()
         User.create_default_user()
-        count = db.record_count(Student)
+        upload_data()
 
 is_connected = db.check_connection()
 
@@ -45,14 +56,3 @@ def missing_token_callback(error_string):
 @jwt.expired_token_loader
 def custom_expired_token_callback(jwt_header, jwt_payload):
     return jsonify({"msg": "Your session has expired, please login again."}), 401  
-
-def upload_data():
-    if db.record_count(Student) <= 0:
-        with open('users.csv', newline='') as csvfile:
-            csvreader = csv.reader(csvfile, delimiter=',', quotechar='"')
-            next(csvreader, None)  # Skip the header row
-            for row in csvreader:
-                student = Student()
-                student.read_CSV_Row(row)
-                db.add_new_record(student)
-            db.commit()
