@@ -8,6 +8,7 @@ from ..models.student import Student
 import requests
 from .response import response
 from flask_jwt_extended import jwt_required
+from ..models.envs import GOOGLE_API_KEY
 
 class AddressApi(AbstractRoute):
     def __init__(self):
@@ -22,9 +23,7 @@ address_blueprint = Blueprint("address",__name__)
 
 #https://developers.google.com/maps/documentation/geocoding/requests-reverse-geocoding
 def build_google_api_url(lat, long):
-    key = "AIzaSyD_VXrKBFlwiym7lXKhMw8qGsnJdtH60J0"
-    url = f"https://maps.googleapis.com/maps/api/geocode/json?latlng={lat.strip()},{long.strip()}&key={key}&result_type=street_address&location_type=ROOFTOP"
-    return url
+    return f"https://maps.googleapis.com/maps/api/geocode/json?latlng={lat.strip()},{long.strip()}&key={GOOGLE_API_KEY}&result_type=street_address&location_type=ROOFTOP"
 
 @address_blueprint.route(f"/api/geocoding/<int:record_id>",methods=["POST"])
 @jwt_required()

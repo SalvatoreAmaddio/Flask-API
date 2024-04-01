@@ -6,3 +6,4 @@ flask-jwt-extended
 sqlalchemy-utils
 marshmallow-sqlalchemy
 requests
+python-dotenv

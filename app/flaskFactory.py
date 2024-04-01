@@ -5,21 +5,22 @@ from .routes.address import address_blueprint
 from .routes.user import user_blueprint
 from .serialiser import ma
 from .security import jwt
+from .models.envs import *
 
 is_connected = False
 
-db.create_schema("root:root@localhost/","flaskAssessment")
+db.create_schema(DB_PATH,DB_NAME)
 app = Flask(__name__)
 
 app.register_blueprint(student_blueprint)
 app.register_blueprint(address_blueprint)
 app.register_blueprint(user_blueprint)
 
-db.set_connection_string(app,"root:root@localhost/flaskAssessment")
+db.set_connection_string(app,DB_PATH)
 db.set_app(app)
 ma.init_app(app)
 
-jwt.set_secret_key(app,"123456789010")
+jwt.set_secret_key(app,SECRET_KEY)
 jwt.set_cookie_security(app,False) #to change to true
 jwt.set_token_location(app,["cookies"])
 jwt.set_cookie_protection(app)
