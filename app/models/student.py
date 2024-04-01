@@ -34,3 +34,19 @@ class Student(db.Model, AbstractModel):
         self.math_grade = data["math_grade"]
         self.sciences_grade = data["sciences_grade"]
         self.languages_grade = data["languages_grade"]
+
+    def read_CSV_Row(self, data: list):
+        try:
+            self.name = data[1]
+            self.nationality = data[2]
+            self.city = data[3]
+            self.lat = data[4]
+            self.long = data[5]
+            self.gender = data[6]
+            self.age = data[7]
+            self.english_grade = data[8]
+            self.math_grade = data[9]
+            self.sciences_grade = data[10]
+            self.languages_grade = data[11]
+        except Exception as e:
+            print(f"Ensure you've upload the right cvs file:\n{e}")

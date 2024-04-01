@@ -7,7 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text
 from sqlalchemy.orm import backref
 from enum import Enum
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, func
 from sqlalchemy_utils import database_exists, create_database
 
 class FKOptions(Enum):
@@ -96,6 +96,15 @@ class pyMySQL(SQLAlchemy):
         self.create_all()
         self.session.commit()
 
+    def add_new_record(self, record):
+        """
+        It adds a new record to the session waiting for a commit command to be executed
+        
+        Args:
+            record: an object that derives from db.Model
+        """
+        self.session.add(record)
+
     def commit_new_record(self, record):
         """
         It adds a new record and commit the changes
@@ -111,6 +120,15 @@ class pyMySQL(SQLAlchemy):
 
     def flush(self):
         self.session.flush()
+
+    def to_delete_record(self, record):
+        """
+        It notes that a record should be deleted and wait for a commit command to be executed
+        
+        Args:
+            record: an object that derives from db.Model
+        """
+        self.session.delete(record)
 
     def commit_delete_record(self, record):
         """
@@ -186,6 +204,8 @@ class pyMySQL(SQLAlchemy):
         It commits changes to the database.
 
         Use this method when dealing with Update CRUD operations.
+
+        or when adding/deleting multiple records at once. 
 
         For Example:
 
@@ -289,6 +309,9 @@ class pyMySQL(SQLAlchemy):
         """
         isOneToOne = not isOneToOne
         return self.relationship(table_name, backref = backref(class_name, uselist=isOneToOne, cascade = options.value))
+
+    def record_count(self,entity):
+        return self.session.query(func.count('*')).select_from(entity).scalar()
 
     def check_connection(self):
         """
