@@ -8,7 +8,6 @@ from sqlalchemy.sql import text
 from sqlalchemy.orm import backref
 from enum import Enum
 from sqlalchemy import create_engine, func
-from sqlalchemy_utils import database_exists, create_database
 
 class FKOptions(Enum):
     CASCADE = "CASCADE"
