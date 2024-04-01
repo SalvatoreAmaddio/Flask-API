@@ -14,7 +14,7 @@ class JWT(JWTManager):
     def set_token_location(self, app:Flask, value:dict):
         app.config["JWT_TOKEN_LOCATION"] = value
 
-    def set_cookie_protection(self, app:Flask, value:bool = True):
+    def set_cookie_CSFR_protection(self, app:Flask, value:bool = True):
         app.config["JWT_COOKIE_CSRF_PROTECT"] = value
 
     def set_token_expiration(self, app:Flask, time:timedelta = timedelta(minutes=30)):

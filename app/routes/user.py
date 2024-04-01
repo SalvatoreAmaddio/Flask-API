@@ -57,6 +57,3 @@ def login():
             return response(f"Incorrect Password, please try again. {retrieved_user}",400)
     except KeyError:
         return response("Please provide both email and password",400)
-
-        
-

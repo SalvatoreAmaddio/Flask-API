@@ -28,7 +28,7 @@ ma.init_app(app)
 jwt.set_secret_key(app,SECRET_KEY)
 jwt.set_cookie_security(app,False) #to change to true
 jwt.set_token_location(app,["cookies"])
-jwt.set_cookie_protection(app)
+jwt.set_cookie_CSFR_protection(app,False)
 jwt.set_token_expiration(app)
 jwt.set_app(app)
 
@@ -41,7 +41,7 @@ is_connected = db.check_connection()
 
 @jwt.unauthorized_loader
 def missing_token_callback(error_string):
-    return jsonify({"msg": "Please login"}), 401
+    return jsonify({"msg": "Please login", "error":error_string}), 401
 
 @jwt.expired_token_loader
 def custom_expired_token_callback(jwt_header, jwt_payload):
