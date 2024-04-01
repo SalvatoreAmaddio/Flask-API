@@ -1,4 +1,3 @@
-import csv
 from flask import Flask, jsonify
 from .database import db
 from .routes.student import student_blueprint
@@ -8,19 +7,8 @@ from .serialiser import ma
 from .security import jwt
 from .models.envs import *
 from .models.user import User
-from .models.student import Student
+from .upload_data import upload_student_data
 
-def upload_data():
-    if db.record_count(Student) <= 0:
-        with open('data/raw/studentdataset.csv', newline='') as csvfile:
-            csvreader = csv.reader(csvfile, delimiter=',', quotechar='"')
-            next(csvreader, None)  # Skip the header row
-            for row in csvreader:
-                student = Student()
-                student.read_CSV_Row(row)
-                db.add_new_record(student)
-            db.commit()
-    
 is_connected = False
 
 db.create_schema(DB_DEFAULT_PATH, DB_NAME)
@@ -45,7 +33,7 @@ jwt.set_app(app)
 with app.app_context():
         db.create_tables()
         User.create_default_user()
-        upload_data()
+        upload_student_data()
 
 is_connected = db.check_connection()
 
