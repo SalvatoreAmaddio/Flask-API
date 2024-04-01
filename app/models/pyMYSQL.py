@@ -74,11 +74,11 @@ class pyMySQL(SQLAlchemy):
         For Example:
             db.create_schema("root:root@localhost/","flaskAssessment")
         """
-        engine = create_engine(f'mysql+pymysql://{dbPath}')
-        conn = engine.connect()
-        sql_cmd = text(f"CREATE DATABASE IF NOT EXISTS {dbName}")
-        conn.execute(sql_cmd)
-        conn.close()
+            engine = create_engine(f'mysql+pymysql://{dbPath}')
+            conn = engine.connect()
+            sql_cmd = text(f"CREATE DATABASE IF NOT EXISTS {dbName}")
+            conn.execute(sql_cmd)
+            conn.close()
 
     def create_tables(self):
         """
