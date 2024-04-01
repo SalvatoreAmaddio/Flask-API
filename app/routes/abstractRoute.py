@@ -42,8 +42,7 @@ class AbstractRoute():
                 records = db.get_all_records(self.entity)
                 if len(records) <= 0:
                         return response("No Data",200)
-                self.schema.many = True
-                self.schema.setDumpedData(records)
+                self.schema.setDumpedData(records, is_many=True)
                 return response(self.schema.dumped_data, 200)
         
         def single_record(self, record_id):
@@ -51,7 +50,6 @@ class AbstractRoute():
                         record = db.get_first(self.entity, record_id)
                         if record is None:
                                 return response(self.__record_not_found,404)
-                        self.schema.many = False
                         self.schema.setDumpedData(record)
                         return response(self.schema.dumped_data, 200)
                 except Exception as e:
@@ -83,7 +81,6 @@ class AbstractRoute():
                                         db.commit()
 
                         record = db.get_first(self.entity, record_id)
-                        self.schema.many = False
                         self.schema.setDumpedData(record)
                         return response(self.__record_updated, self.schema.dumped_data, 200)
                 except sqlalchemy.exc.IntegrityError:
@@ -105,7 +102,6 @@ class AbstractRoute():
                                 else:
                                         setattr(old_record, key, value)
                                         db.commit()
-                        self.schema.many = False
                         self.schema.setDumpedData(old_record)
                         return response(self.__record_updated, self.schema.dumped_data, 200)
                 except sqlalchemy.exc.IntegrityError:

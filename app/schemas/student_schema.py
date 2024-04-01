@@ -11,6 +11,6 @@ class StudentSchema(AbstractSchema):
     
     addresses = ma.Nested(AddressSchema, many=True)
 
-    def __init__(self, many = False):
-        super().__init__(many)
+    def __init__(self):
+        super().__init__(self)
 

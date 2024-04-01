@@ -7,8 +7,9 @@ class AbstractSchema(SQLAlchemyAutoSchema):
     class Meta:
         pass
      
-    def __init__(self, is_many = False):
-        super().__init__(many = is_many)
+    def __init__(self):
+        super().__init__()
     
-    def setDumpedData(self, data:dict):
+    def setDumpedData(self, data:dict, is_many = False):
+        self.many = is_many
         self.dumped_data = self.dump(data)

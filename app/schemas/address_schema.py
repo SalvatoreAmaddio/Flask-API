@@ -7,5 +7,5 @@ class AddressSchema(AbstractSchema):
         model = Address
         fields = ("id","student_id","number","house_name","road","city","state","country","zipcode")
 
-    def __init__(self, many = False):
-        super().__init__(many)
+    def __init__(self):
+        super().__init__(self)
