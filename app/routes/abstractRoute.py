@@ -16,7 +16,7 @@ class AbstractRoute():
                 self.__record_not_found = "Record not found, try with a different ID"
                 self.__record_updated = "Record successfully updated"
                 self.__required_fields_err = f"Field(s) not found Error: Please ensure you've specified all required fields as follow: {self.fields()}. Check your spelling also."
-                self.__pk_err = "Do not insert a primary key value as it is Autoincrement. It cannot be changed or added by the user"
+                self.__pk_err = "You have attempt to alter the value of a autoincremented primary or provide a foreign key's value that does not exist."
 
         @abstractmethod
         def fields(self):
