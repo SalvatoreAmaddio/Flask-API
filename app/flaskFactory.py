@@ -26,7 +26,7 @@ db.set_app(app)
 ma.init_app(app)
 
 jwt.set_secret_key(app,SECRET_KEY)
-jwt.set_cookie_security(app,False) #to change to true
+jwt.set_cookie_security(app, False)
 jwt.set_token_location(app,["cookies"])
 jwt.set_cookie_CSFR_protection(app,False)
 jwt.set_token_expiration(app)
