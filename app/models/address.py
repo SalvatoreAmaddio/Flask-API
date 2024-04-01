@@ -8,7 +8,7 @@ class Address(db.Model, AbstractModel):
     __tablename__ = "address"
     id = db.is_pk()
     student_id = db.is_fk("student.id")
-    number = db.is_varchar_field("10",can_be_null=True)
+    number = db.is_varchar_field(chars=10,can_be_null=True)
     house_name = db.is_varchar_field(can_be_null=True)
     road = db.is_varchar_field()
     city = db.is_varchar_field()

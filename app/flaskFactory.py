@@ -6,10 +6,12 @@ from .routes.user import user_blueprint
 from .serialiser import ma
 from .security import jwt
 from .models.envs import *
+from .models.user import User
 
 is_connected = False
 
 db.create_schema(DB_DEFAULT_PATH, DB_NAME)
+
 app = Flask(__name__)
 
 app.register_blueprint(student_blueprint)
@@ -29,6 +31,7 @@ jwt.set_app(app)
 
 with app.app_context():
         db.create_tables()
+        User.create_default_user()
 
 is_connected = db.check_connection()
 

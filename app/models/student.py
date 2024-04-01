@@ -14,10 +14,10 @@ class Student(db.Model, AbstractModel):
     long = db.is_varchar_field()
     gender = db.is_varchar_field()
     age = db.is_varchar_field()
-    english_grade = db.is_int_field()
-    math_grade = db.is_int_field()
-    sciences_grade = db.is_int_field()
-    languages_grade = db.is_int_field()
+    english_grade = db.is_float_field()
+    math_grade = db.is_float_field()
+    sciences_grade = db.is_float_field()
+    languages_grade = db.is_float_field()
 
     def __str__(self):
         return f"StudentID: {self.id}; Name: {self.name}; Nationality: {self.nationality}"

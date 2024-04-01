@@ -238,6 +238,18 @@ class pyMySQL(SQLAlchemy):
         """
         return self.Column(self.Integer, nullable = can_be_null, unique = is_unique)
 
+    def is_float_field(self, can_be_null:bool = False, is_unique:bool = False):
+        """
+        It tells the ORM that the field is an float.
+        
+        Args:
+            can_be_null: tells if the value is nullable or not; default is False.
+            is_unique: tells if the value is unique and therefore no duplicates are allowed; default is False
+        For Example:
+            Age = db.is_float_field()
+        """
+        return self.Column(self.Float, nullable = can_be_null, unique = is_unique)
+
     def is_pk(self):
         """
         It tells the ORM that the field is a Primary Key.

@@ -34,6 +34,15 @@ class User(db.Model):
     def create_jwt_token(self):
         return create_access_token(self.email)
     
+    @staticmethod 
+    def create_default_user():
+        user = db.where_first(User, email="guest@xandertalent.com")
+        if user:
+            return
+        else:
+            user = User("guest@xandertalent.com","Welcome_to_this_assessment01")
+            db.commit_new_record(user)
+            
     @staticmethod
     def refresh_jwt_token(func):
         return create_access_token(identity=func())
