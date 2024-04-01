@@ -3,6 +3,7 @@ from .database import db
 from .routes.student import student_blueprint
 from .routes.address import address_blueprint
 from .routes.user import user_blueprint
+from .routes.geocoding import geocoding_blueprint
 from .serialiser import ma
 from .security import jwt
 from .models.envs import *
@@ -18,6 +19,7 @@ app = Flask(__name__)
 app.register_blueprint(student_blueprint)
 app.register_blueprint(address_blueprint)
 app.register_blueprint(user_blueprint)
+app.register_blueprint(geocoding_blueprint)
 
 db.set_connection_string(app,DB_PATH)
 db.set_app(app)
