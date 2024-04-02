@@ -24,10 +24,13 @@ def refresh(response):
 
 
 @user_blueprint.route("/api/user/register", methods=["POST"])
-def register():
+def register(dict:dict=None):
     if not db.check_connection():
         return response("Database Connection Failed", 500)                        
-    data = request.json
+    if dict is None:
+        data = request.json
+    else:
+        data = dict
     try:
         user = User(data["email"],data["password"])
         new_record_attempt = user.attempt_insert()
@@ -42,10 +45,13 @@ def register():
         return response("Please provide both email and password.",400)
     
 @user_blueprint.route("/api/user/login", methods=["POST"])
-def login():
+def login(dict:dict=None):
     if not db.check_connection():
-        return response("Database Connection Failed", 500)                        
-    data = request.json
+        return response("Database Connection Failed", 500) 
+    if dict is None:
+        data = request.json
+    else:
+        data = dict                       
     try:
         user = User(data["email"],data["password"])
         retrieved_user= user.retrieve()

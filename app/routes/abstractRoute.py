@@ -64,10 +64,13 @@ class AbstractRoute():
                 except Exception as e:
                         return response(str(e), 400)
         
-        def post_record(self):
+        def post_record(self, dict:dict = None):
                 if not db.check_connection():
                         return response(self.__connection_failed, 500)                        
-                data = request.json
+                if dict is None:
+                        data = request.json
+                else:   
+                        data = dict
                 try:
                         self.record.readDictionary(data)
                         db.commit_new_record(self.record)
@@ -77,14 +80,16 @@ class AbstractRoute():
                 except KeyError:
                         return response(self.__required_fields_err, 400)
         
-        def patch_record(self, record_id):
+        def patch_record(self, record_id, dict:dict = None):
                 if not db.check_connection():
                         return response(self.__connection_failed, 500)                        
                 record = db.get_first(self.entity, record_id)
                 if record is None:
                         return response(self.__record_not_found,404)
-    
-                data = request.json
+                if dict is None:
+                        data = request.json
+                else:   
+                        data = dict
                 try:
                         for key, value in data.items():
                                 if not hasattr(record, key):
@@ -101,14 +106,16 @@ class AbstractRoute():
                 except KeyError:
                         return response(f"Field not found Error: Please ensure you've specified one or more field as follow: {self.fields()}. Check your spelling also.", 400)
 
-        def put_record(self, record_id):
+        def put_record(self, record_id, dict:dict = None):
                 if not db.check_connection():
                         return response(self.__connection_failed, 500)                        
                 old_record = db.get_first(self.entity, record_id)
                 if old_record is None:
                         return response(self.__record_not_found,404)
-    
-                data = request.json
+                if dict is None:
+                        data = request.json
+                else:   
+                        data = dict
                 try:
                         self.record.readDictionary(data) #check if all fields have been provided
                         for key, value in data.items(): #loop through to update old_student based on the JSON
