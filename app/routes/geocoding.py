@@ -1,3 +1,6 @@
+"""
+This class defines the route for the google API
+"""
 from flask import Blueprint
 import sqlalchemy.exc as SQLError
 from ..models.address import Address
@@ -26,12 +29,13 @@ def google_api(record_id):
     long = getattr(student,"long")
     api_response = requests.get(build_google_api_url(lat, long))
     data = api_response.json()
-    results = data["results"]
+    #start filtering the results return by the JSON
+    results = data["results"] 
 
     if len(results) == 0:
          return response("Google returned zero results. Sorry :(",{"lat":lat,"long":long, "student":str(student)},200)
     
-    address_component = results[0]["address_components"]
+    address_component = results[0]["address_components"] #get the address information only
     address = Address()
     address.student_id = record_id
     address.city = getattr(student,"city")

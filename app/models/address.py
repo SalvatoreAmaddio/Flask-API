@@ -31,7 +31,9 @@ class Address(db.Model, AbstractModel):
         self.zipcode = data["zipcode"]
 
     def read_google_result(self, address_component:dict):
-
+        """
+        This method is used to read google JSON results
+        """
         for component in address_component:
             if component["types"][0]=="postal_code":
                 self.zipcode = component["long_name"]

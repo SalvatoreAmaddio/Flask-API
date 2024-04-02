@@ -1,3 +1,6 @@
+"""
+an handy function to return json results
+"""
 from flask import jsonify
 
 def response(*args): 

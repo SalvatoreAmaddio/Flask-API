@@ -1,3 +1,6 @@
+"""
+This class defines the route for address API
+"""
 from flask import Blueprint
 from ..models.address import Address
 from ..schemas.address_schema import AddressSchema

@@ -1,3 +1,7 @@
+"""
+This abstract class defines a code base which is pretty
+equal for Student and Address routes
+"""
 from flask import request
 from ..database import db
 from .response import *
