@@ -3,6 +3,7 @@ from flask_jwt_extended import get_jwt_identity, set_access_cookies, get_jwt, un
 from datetime import datetime, timedelta
 from ..models.user import User
 from .response import response
+from ..database import db
 
 user_blueprint = Blueprint("user",__name__)
 
@@ -24,6 +25,8 @@ def refresh(response):
 
 @user_blueprint.route("/api/user/register", methods=["POST"])
 def register():
+    if not db.check_connection():
+        return response("Database Connection Failed", 500)                        
     data = request.json
     try:
         user = User(data["email"],data["password"])
@@ -40,6 +43,8 @@ def register():
     
 @user_blueprint.route("/api/user/login", methods=["POST"])
 def login():
+    if not db.check_connection():
+        return response("Database Connection Failed", 500)                        
     data = request.json
     try:
         user = User(data["email"],data["password"])

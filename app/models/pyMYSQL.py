@@ -317,7 +317,7 @@ class pyMySQL(SQLAlchemy):
         It checks if the connection was successful.
 
         Returns:
-            A string telling the Version of the Database or an Error Message about why the connection failed.
+            A bool indicating if the connection was successful or not.
         """
         try:
             sql_cmd = text("SELECT VERSION()")
@@ -326,4 +326,4 @@ class pyMySQL(SQLAlchemy):
                 self.version = result.fetchone()
                 return True
         except Exception as e:
-            return f"Database connection failed: {e}"
+            return False

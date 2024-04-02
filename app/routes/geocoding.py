@@ -20,6 +20,8 @@ def build_google_api_url(lat, long):
 @geocoding_blueprint.route(f"/api/geocoding/<int:record_id>",methods=["POST"])
 @jwt_required()
 def google_api(record_id):
+    if not db.check_connection():
+        return response("Database Connection Failed", 500)                        
     student = db.get_first(Student,record_id)
     
     if student is None:

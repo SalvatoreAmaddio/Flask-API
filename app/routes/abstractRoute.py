@@ -17,6 +17,7 @@ class AbstractRoute():
                 self._schema = schema
                 self._record = record
                 self._api_path = api_path
+                self.__connection_failed = "Database Connection Failed"
                 self.__record_not_found = "Record not found, try with a different ID"
                 self.__record_updated = "Record successfully updated"
                 self.__required_fields_err = f"Field(s) not found Error: Please ensure you've specified all required fields as follow: {self.fields()}. Check your spelling also."
@@ -43,6 +44,8 @@ class AbstractRoute():
                 return self._schema
 
         def all_records(self):
+                if not db.check_connection():
+                        return response(self.__connection_failed, 500)                        
                 records = db.get_all_records(self.entity)
                 if len(records) <= 0:
                         return response("No Data",200)
@@ -50,6 +53,8 @@ class AbstractRoute():
                 return response(self.schema.dumped_data, 200)
         
         def single_record(self, record_id):
+                if not db.check_connection():
+                        return response(self.__connection_failed, 500)                        
                 try:
                         record = db.get_first(self.entity, record_id)
                         if record is None:
@@ -57,9 +62,11 @@ class AbstractRoute():
                         self.schema.setDumpedData(record)
                         return response(self.schema.dumped_data, 200)
                 except Exception as e:
-                        return response(str(record), 400)
+                        return response(str(e), 400)
         
         def post_record(self):
+                if not db.check_connection():
+                        return response(self.__connection_failed, 500)                        
                 data = request.json
                 try:
                         self.record.readDictionary(data)
@@ -71,6 +78,8 @@ class AbstractRoute():
                         return response(self.__required_fields_err, 400)
         
         def patch_record(self, record_id):
+                if not db.check_connection():
+                        return response(self.__connection_failed, 500)                        
                 record = db.get_first(self.entity, record_id)
                 if record is None:
                         return response(self.__record_not_found,404)
@@ -93,6 +102,8 @@ class AbstractRoute():
                         return response(f"Field not found Error: Please ensure you've specified one or more field as follow: {self.fields()}. Check your spelling also.", 400)
 
         def put_record(self, record_id):
+                if not db.check_connection():
+                        return response(self.__connection_failed, 500)                        
                 old_record = db.get_first(self.entity, record_id)
                 if old_record is None:
                         return response(self.__record_not_found,404)
@@ -114,6 +125,8 @@ class AbstractRoute():
                         return response(self.__required_fields_err, 400)
 
         def delete_record(self, record_id):
+                if not db.check_connection():
+                        return response(self.__connection_failed, 500)                        
                 record = db.get_first(self.entity, record_id)
                 if record is None:
                         return response(self.__record_not_found,404)
