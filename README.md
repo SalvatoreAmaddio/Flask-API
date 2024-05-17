@@ -23,3 +23,8 @@ following credentials:
 
 email: guest@xandertalent.com
 password: Welcome_to_this_assessment01
+
+Finally, the application provides an additional endpoint to interact with Google's
+Geocoding API. By passing the StudentID, the application can interrogate Google's API
+using latitude and longitude as parameters. This will return an address, which will be
+inserted into the address table
