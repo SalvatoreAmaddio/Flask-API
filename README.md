@@ -10,9 +10,7 @@ application without interruptions. The application also handles error inputs tha
 User might run into, preventing the application from crashing. In case of human error,
 the User can remake a request by providing the right inputs.
 Requests can be made through the website Postman. However, to perform some
-requests, the desktop version of the service has to be installed. Screenshots of
-examples will illustrate the application's functionalities and how human errors are
-handled.
+requests, the desktop version of the service has to be installed.
 
 A database is created on the application startup, and some data are uploaded. This
 process is performed only once, meaning data will not be overwritten. The database has
